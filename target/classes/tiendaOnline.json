@@ -1,0 +1,430 @@
+{
+
+    "tienda": {
+ 
+        "nombre": "Mi Tienda Online",
+ 
+        "categorias": [
+ 
+            {
+ 
+                "id": 1,
+ 
+                "nombre": "Electrónica",
+ 
+                "productos": [
+ 
+                    {
+ 
+                        "id": 101,
+ 
+                        "nombre": "Smartphone",
+ 
+                        "precio": 999.99,
+ 
+                        "descripcion": "El último smartphone del mercado.",
+ 
+                        "caracteristicas": {
+ 
+                            "pantalla": "6.5 pulgadas",
+ 
+                            "camara": "48 MP",
+ 
+                            "bateria": "4500 mAh"
+ 
+                        },
+ 
+                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+ 
+                        "inventario": 10
+ 
+                    },
+                    {
+                       
+                        "id": 257,
+ 
+                        "nombre": "Televisión",
+ 
+                        "precio": 1050.00,
+ 
+                        "descripcion": "Lo ultimo en tecnología de televisión del mercado.",
+ 
+                        "caracteristicas": {
+ 
+                            "pantalla": "50 pulgadas",
+ 
+                            "resolucion": "4K",
+ 
+                            "relacion-aspecto": "16:9"
+ 
+                        },
+ 
+                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+ 
+                        "inventario": 20
+                        
+                    },
+                    {
+                       
+                        "id": 463,
+ 
+                        "nombre": "Portatil",
+ 
+                        "precio": 419.00,
+ 
+                        "descripcion": "Lo mejor en portatiles de todo mercado",
+ 
+                        "caracteristicas": {
+ 
+                            "pantalla": "15.6 pulgadas",
+ 
+                            "ram": "8 GB",
+ 
+                            "disco-duro": "SSD de 256 GB"
+ 
+                        },
+ 
+                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+ 
+                        "inventario": 15
+                        
+                    }
+ 
+ 
+                ]
+ 
+            },
+
+            {
+ 
+                "id": 2,
+ 
+                "nombre": "Deportes",
+ 
+                "productos": [
+ 
+                    {
+ 
+                        "id": 87,
+ 
+                        "nombre": "Balon",
+ 
+                        "precio": 29.00,
+ 
+                        "descripcion": "Balon de futbol vintage, replica de la Copa del Mundo de 1966.",
+ 
+                        "caracteristicas": {
+ 
+                            "tamanyo": "5, mide 68-70 cm",
+ 
+                            "peso": "410-450 gramos",
+ 
+                            "material": "Cuero Sintético"
+ 
+                        },
+ 
+                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+ 
+                        "inventario": 25
+ 
+                    },
+                    {
+                       
+                        "id": 139,
+ 
+                        "nombre": "Bate",
+ 
+                        "precio": 24.90,
+ 
+                        "descripcion": "Bate para principiantes en el deporte.",
+ 
+                        "caracteristicas": {
+ 
+                            "tamanyo": "32",
+ 
+                            "peso": "660 gramos",
+ 
+                            "material": "Madera"
+ 
+                        },
+ 
+                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+ 
+                        "inventario": 25
+                        
+                    },
+                    {
+                       
+                        "id": 482,
+ 
+                        "nombre": "Palo de Hockey",
+ 
+                        "precio": 79.99,
+ 
+                        "descripcion": "Palo de Hockey de uso Profesional",
+ 
+                        "caracteristicas": {
+ 
+                            "tamanyo": "40",
+ 
+                            "peso": "500 gramos",
+ 
+                            "material": "Madera"
+ 
+                        },
+ 
+                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+ 
+                        "inventario": 5
+                        
+                    }
+ 
+ 
+                ]
+ 
+            },
+
+            {
+ 
+                "id": 3,
+ 
+                "nombre": "Ropa",
+ 
+                "productos": [
+ 
+                    {
+ 
+                        "id": 23,
+ 
+                        "nombre": "Chaqueta",
+ 
+                        "precio": 59.99,
+ 
+                        "descripcion": "Chaqueta de algodón militar para hombres",
+ 
+                        "caracteristicas": {
+ 
+                            "tamanyo": "M",
+ 
+                            "cuidado": "Lavado a mano",
+ 
+                            "material": "90% algodón y 10% poliéster"
+ 
+                        },
+ 
+                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+ 
+                        "inventario": 7
+ 
+                    },
+                    {
+                       
+                        "id": 784,
+ 
+                        "nombre": "Termica",
+ 
+                        "precio": 29.99,
+ 
+                        "descripcion": "Ropa termica para Esquí de mujer.",
+ 
+                        "caracteristicas": {
+ 
+                            "tamanyo": "L",
+ 
+                            "cuidado": "Lavado a Maquina o a mano",
+ 
+                            "material": "65% poliéster, 31% poliamida y 4% elastano"
+ 
+                        },
+ 
+                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+ 
+                        "inventario": 25
+                        
+                    },
+                    {
+                       
+                        "id": 912,
+ 
+                        "nombre": "Camiseta",
+ 
+                        "precio": 16.90,
+ 
+                        "descripcion": "Camiseta de Manga Corta Unisex ",
+ 
+                        "caracteristicas": {
+ 
+                            "tamanyo": "M",
+ 
+                            "cuidado": "Lavado a Maquina",
+ 
+                            "material": "100% algodón"
+ 
+                        },
+ 
+                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+ 
+                        "inventario": 50
+                        
+                    }
+ 
+ 
+                ]
+ 
+            }
+ 
+        ],
+ 
+        "usuarios": [
+            {
+                "id": 1,
+
+                "nombre": "Juan Pérez",
+
+                "email": "juanperez@example.com",
+
+                "direccion": {
+
+                    "calle": "Calle Principal",
+
+                    "numero": 123,
+
+                    "ciudad": "Madrid",
+
+                    "pais": "España"
+
+                },
+
+                "historialCompras": [
+
+                    {
+
+                        "productoId": 912,
+
+                        "cantidad": 2,
+
+                        "fecha": "2023-11-14"
+
+                    },
+                    {
+
+                        "productoId": 101,
+
+                        "cantidad": 1,
+
+                        "fecha": "2023-11-20"
+
+                    },
+                    {
+
+                        "productoId": 257,
+
+                        "cantidad": 1,
+
+                        "fecha": "2023-11-22"
+
+                    }
+                ]
+            },
+            {
+                "id": 2,
+
+                "nombre": "Ana García",
+
+                "email": "anagarcia@example.com",
+
+                "direccion": {
+
+                    "calle": "Calle Secundaria",
+
+                    "numero": 45,
+
+                    "ciudad": "Barcelona",
+
+                    "pais": "España"
+
+                },
+
+                "historialCompras": [
+
+                    {
+
+                        "productoId": 23,
+
+                        "cantidad": 1,
+
+                        "fecha": "2023-11-18"
+
+                    },
+                    {
+                        "productoId": 139,
+
+                        "cantidad": 1,
+
+                        "fecha": "2023-11-19"
+
+                    },
+                    {
+
+                        "productoId": 784,
+
+                        "cantidad": 3,
+
+                        "fecha": "2023-11-20"
+
+                    }
+                ]
+            },
+            {
+
+                "id": 3,
+
+                "nombre": "Carlos López",
+
+                "email": "carloslopez@example.com",
+
+                "direccion": {
+
+                    "calle": "Avenida Libertad",
+
+                    "numero": 78,
+
+                    "ciudad": "Valencia",
+
+                    "pais": "España"
+
+                },
+                "historialCompras": [
+
+                    {
+
+                        "productoId": 257,
+
+                        "cantidad": 1,
+
+                        "fecha": "2023-11-21"
+
+                    },
+                    {
+
+                        "productoId": 87,
+
+                        "cantidad": 2,
+
+                        "fecha": "2023-11-23"
+
+                    },
+                    {
+
+                        "productoId": 912,
+
+                        "cantidad": 1,
+
+                        "fecha": "2023-11-24"
+                        
+                    }
+                ]
+            }
+        ]
+    }
+}
