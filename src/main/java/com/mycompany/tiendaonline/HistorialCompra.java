@@ -102,6 +102,8 @@ public class HistorialCompra extends javax.swing.JFrame {
             
         } else {
             
+            informacionHistorial.removeAll();
+            
             Compra compra = compras.get(indiceActual);
 
             infoCompras.setText("<html>" +
@@ -118,12 +120,10 @@ public class HistorialCompra extends javax.swing.JFrame {
             
             JLabel imagenProducto = new JLabel(imagen);
             
-            imagenProducto.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
-
-            
             imagenProducto.setHorizontalAlignment(SwingConstants.CENTER);
+            
             informacionHistorial.add(imagenProducto, BorderLayout.CENTER);
-
+            informacionHistorial.add(infoCompras, BorderLayout.SOUTH);
             
             informacionHistorial.revalidate();
             informacionHistorial.repaint();
