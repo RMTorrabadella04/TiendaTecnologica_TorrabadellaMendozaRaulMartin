@@ -34,7 +34,7 @@
  
                         },
  
-                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+                        "imagenes": "src/main/Resources/smartphone.jpeg",
  
                         "inventario": 10
  
@@ -59,7 +59,7 @@
  
                         },
  
-                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+                        "imagenes": "src/main/Resources/tv.jpg",
  
                         "inventario": 20
                         
@@ -84,7 +84,7 @@
  
                         },
  
-                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+                        "imagenes": "src/main/Resources/portatil.jpg",
  
                         "inventario": 15
                         
@@ -123,7 +123,7 @@
  
                         },
  
-                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+                        "imagenes": "src/main/Resources/balon.jpg",
  
                         "inventario": 25
  
@@ -148,7 +148,7 @@
  
                         },
  
-                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+                        "imagenes": "src/main/Resources/bate.jpg",
  
                         "inventario": 25
                         
@@ -173,7 +173,7 @@
  
                         },
  
-                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+                        "imagenes": "src/main/Resources/paloHockey.jpg",
  
                         "inventario": 5
                         
@@ -212,7 +212,7 @@
  
                         },
  
-                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+                        "imagenes": "src/main/Resources/chaqueta.jpg",
  
                         "inventario": 7
  
@@ -237,7 +237,7 @@
  
                         },
  
-                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+                        "imagenes": "src/main/Resources/termica.jpg",
  
                         "inventario": 25
                         
@@ -262,7 +262,7 @@
  
                         },
  
-                        "imagenes": ["imagen1.jpg", "imagen2.jpg"],
+                        "imagenes": "src/main/Resources/camisetaunisex.jpeg",
  
                         "inventario": 50
                         

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.tiendaonline;
 
 import java.io.FileNotFoundException;
@@ -30,10 +26,10 @@ import org.json.simple.parser.ParseException;
 
 public class ConexionBBDDJson {
     
-    private String url;
-    private String usuario;
-    private String contrasenya; 
-    private Connection conexion;
+    public static String url;
+    public static String usuario;
+    public static String contrasenya; 
+    public static Connection conexion;
     
     // Constructor
     
@@ -136,7 +132,7 @@ public class ConexionBBDDJson {
                 
                 int inventario = ((Long) productos.get("inventario")).intValue();
                 
-                String url = (String) productos.get("url");
+                String url = (String) productos.get("imagenes");
 
                 // Para hacer el insert en la BBDD
                 

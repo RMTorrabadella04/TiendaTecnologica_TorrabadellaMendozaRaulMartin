@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.tiendaonline;
 
 import java.awt.BorderLayout;
@@ -10,21 +6,29 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author alumno
+ * @author Raul
  */
 public class Usuarios extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Usuarios
-     */
-    public Usuarios() {
+
+    public Usuarios() throws SQLException {
+        
+        
+        
         initComponents();
         
         setTitle("Usuarios");
@@ -32,7 +36,7 @@ public class Usuarios extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        RoundedPanel infoUsuario = new RoundedPanel();
+        RoundedPanel infoUsuario = new RoundedPanel(30);
         infoUsuario.setBackground(new Color(156, 156, 156));    
         infoUsuario.setBounds(25, 17, 1050, 710);
         infoUsuario.setLayout(new BorderLayout());
@@ -48,9 +52,45 @@ public class Usuarios extends javax.swing.JFrame {
         
         if (SesionIniciada.getInstance().isIniciado()) {
             
-            BotonIniciar.setEnabled(false);
-            BotonCerrar.setEnabled(true);
-            BotonHistorial.setEnabled(true); 
+            String email = SesionIniciada.getEmail();
+            
+            String checkUserQuery = "SELECT * FROM Usuario WHERE email = ?";
+            
+            try (PreparedStatement pst = conexion.prepareStatement(checkUserQuery)) {
+                
+                pst.setString(1, email);
+                
+                ResultSet rs = pst.executeQuery();
+                
+                if (rs.next()) {
+                   
+                    int id = rs.getInt("id");
+                    String nombre = rs.getString("nombre");
+                    String calle = rs.getString("calle");
+                    int numero = rs.getInt("numero");
+                    String ciudad = rs.getString("ciudad");
+                    String pais = rs.getString("pais");
+                    
+                    infoUser.setText("<html>ID: " + id + "<br><br>" +
+                                     "NOMBRE: " + nombre + "<br><br>" +
+                                     "EMAIL: " + email + "<br><br>" +
+                                     "DIRECCION: <br><br>"+
+                                     "&nbsp;&nbsp;&nbsp;&nbsp; - CALLE: " + calle + "<br><br>" +
+                                     "&nbsp;&nbsp;&nbsp;&nbsp; - NUMERO: " + numero + "<br><br>" +
+                                     "&nbsp;&nbsp;&nbsp;&nbsp; - CIUDAD: " + ciudad + "<br><br>" +
+                                     "&nbsp;&nbsp;&nbsp;&nbsp; - PAIS: " + pais + "</html>");
+
+                    
+                    BotonIniciar.setEnabled(false);
+                    BotonCerrar.setEnabled(true);
+                    BotonHistorial.setEnabled(true); 
+
+                }
+             
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
             
         } else {
             
@@ -71,27 +111,6 @@ public class Usuarios extends javax.swing.JFrame {
         setVisible(true);
     }
     
-    class RoundedPanel extends JPanel {
-        private int radius = 30;
-
-        public RoundedPanel() {
-           
-            setOpaque(false);
-            setBorder(new EmptyBorder(5, 5, 5, 5));
-            
-        }
-        
-        @Override
-        protected void paintComponent(Graphics g) {
-            
-            super.paintComponent(g);
-            
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // Suavizado de bordes
-            g2d.setColor(getBackground()); // Establecer el color de fondo
-            g2d.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius); // Dibujar rectángulo con bordes redondeados
-        }
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -154,6 +173,11 @@ public class Usuarios extends javax.swing.JFrame {
         BotonHistorial.setFocusable(false);
         BotonHistorial.setRequestFocusEnabled(false);
         BotonHistorial.setRolloverEnabled(false);
+        BotonHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonHistorialActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -199,23 +223,88 @@ public class Usuarios extends javax.swing.JFrame {
         BotonIniciar.setEnabled(true);
         BotonHistorial.setEnabled(false);
         
-       SesionIniciada.getInstance().setIniciado(false); // Cambiar el estado de la sesión
+        SesionIniciada.getInstance().setIniciado(false); // Cambiar el estado de la sesión
 
-        
         infoUser.setText("NO HAY INFORMACION DEL USUARIO, INICIE SESIÓN PARA VERLA :D");
         
     }//GEN-LAST:event_BotonCerrarActionPerformed
 
     private void BotonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonIniciarActionPerformed
        
-        BotonCerrar.setEnabled(true);
-        BotonIniciar.setEnabled(false);
-        BotonHistorial.setEnabled(true); 
+            String emailIntroducido = JOptionPane.showInputDialog("Introduce el correo del usuario con el cual quieres iniciar sesión:");
+
+            SesionIniciada.setEmail(emailIntroducido);
+
+            String checkUserQuery = "SELECT * FROM Usuario WHERE email = ?";
+
+            try (PreparedStatement pst = conexion.prepareStatement(checkUserQuery)) {
+                pst.setString(1, emailIntroducido);
+
+                ResultSet rs = pst.executeQuery();
+
+                // Verificamos si hay resultados
+                if (!rs.next()) {
+                    
+                    JOptionPane.showMessageDialog(null, "No se encontró un usuario con el correo proporcionado.");
+                } else {
+                    
+                    int id = rs.getInt("id");
+                    String nombre = rs.getString("nombre");
+                    String email = rs.getString("email");
+                    String calle = rs.getString("calle");
+                    int numero = rs.getInt("numero");
+                    String ciudad = rs.getString("ciudad");
+                    String pais = rs.getString("pais");
+
+                    
+                    infoUser.setText("<html>ID: " + id + "<br><br>" +
+                                     "NOMBRE: " + nombre + "<br><br>" +
+                                     "EMAIL: " + email + "<br><br>" +
+                                     "DIRECCION: <br><br>" +
+                                     "&nbsp;&nbsp;&nbsp;&nbsp; - CALLE: " + calle + "<br><br>" +
+                                     "&nbsp;&nbsp;&nbsp;&nbsp; - NUMERO: " + numero + "<br><br>" +
+                                     "&nbsp;&nbsp;&nbsp;&nbsp; - CIUDAD: " + ciudad + "<br><br>" +
+                                     "&nbsp;&nbsp;&nbsp;&nbsp; - PAIS: " + pais + "</html>");
+
+                    BotonCerrar.setEnabled(true);
+                    BotonIniciar.setEnabled(false);
+                    BotonHistorial.setEnabled(true);
+
+                    SesionIniciada.getInstance().setIniciado(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         
-       SesionIniciada.getInstance().setIniciado(true);
-        
-        infoUser.setText("GRACIAS POR INICIAR SESIÓN");
     }//GEN-LAST:event_BotonIniciarActionPerformed
+
+    private void BotonHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonHistorialActionPerformed
+        
+        HistorialCompra ventanaHistorial= null;
+        ventanaHistorial = new HistorialCompra();
+
+        // Añado un WindowListener para detectar el cierre de la ventana de usuarios
+        
+        ventanaHistorial.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                
+                // Hago visible la ventana principal de nuevo cuando la ventana de usuarios se cierra
+                
+                setVisible(true); 
+            }
+        });
+
+        // Muestro la ventana de usuarios
+        
+        ventanaHistorial.setVisible(true); 
+
+        // Oculto la ventana principal
+        
+        setVisible(false); 
+        
+    }//GEN-LAST:event_BotonHistorialActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,11 +338,16 @@ public class Usuarios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Usuarios().setVisible(true);
+                try {
+                    new Usuarios().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
     
+    Connection conexion = ConexionBBDDJson.conexion;
     JLabel infoUser;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
