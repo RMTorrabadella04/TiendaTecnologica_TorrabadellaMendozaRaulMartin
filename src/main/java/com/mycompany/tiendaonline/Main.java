@@ -177,18 +177,75 @@ public class Main extends javax.swing.JFrame {
 
     private void BotonRopaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonRopaActionPerformed
         
-        boolean sesionIniciada = SesionIniciada.getInstance().isIniciado();
+        Categoria ventanaRopa = null;
+        ventanaRopa = new Categoria("Ropa");
+        
+        ventanaRopa.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                
+                // Hago visible la ventana principal de nuevo cuando la ventana de usuarios se cierra
+                
+                setVisible(true);
+            }
+        });
 
-        JOptionPane.showMessageDialog(null, sesionIniciada, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        // Muestro la ventana de usuarios
+        
+        ventanaRopa.setVisible(true); 
 
+        // Oculto la ventana principal
+        
+        setVisible(false);
     }//GEN-LAST:event_BotonRopaActionPerformed
 
     private void BotonElectronica1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonElectronica1ActionPerformed
-        // TODO add your handling code here:
+        Categoria ventanaElectronica = null;
+        ventanaElectronica = new Categoria("Electrónica");
+        
+        ventanaElectronica.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                
+                // Hago visible la ventana principal de nuevo cuando la ventana de usuarios se cierra
+                
+                setVisible(true);
+            }
+        });
+
+        // Muestro la ventana de usuarios
+        
+        ventanaElectronica.setVisible(true); 
+
+        // Oculto la ventana principal
+        
+        setVisible(false);
+                                        
     }//GEN-LAST:event_BotonElectronica1ActionPerformed
 
     private void BotonDeportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonDeportesActionPerformed
-        // TODO add your handling code here:
+        
+        Categoria ventanaDeportes = null;
+        ventanaDeportes = new Categoria("Deportes");
+        
+        ventanaDeportes.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                
+                // Hago visible la ventana principal de nuevo cuando la ventana de usuarios se cierra
+                
+                setVisible(true);
+            }
+        });
+
+        // Muestro la ventana de usuarios
+        
+        ventanaDeportes.setVisible(true); 
+
+        // Oculto la ventana principal
+        
+        setVisible(false);
+        
     }//GEN-LAST:event_BotonDeportesActionPerformed
 
     private void BotonUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonUsuarioActionPerformed
