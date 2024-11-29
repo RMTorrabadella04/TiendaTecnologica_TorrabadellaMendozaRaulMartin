@@ -5,7 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.sql.Date;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -78,6 +79,34 @@ public class Categoria extends javax.swing.JFrame {
         
         datosProductos();
         
+        // Para hacer el cambio a la pestaña de compra, segun a que boton le has dado
+        
+        verMas1.addActionListener(new ActionListener() {
+           
+            public void actionPerformed(ActionEvent e) {
+                
+                ventanaCompra(nombreProduto1);
+                
+            }
+        });
+
+        verMas2.addActionListener(new ActionListener() {
+           
+            public void actionPerformed(ActionEvent e) {
+                
+                ventanaCompra(nombreProduto2);
+                
+            }
+        }); 
+
+        verMas3.addActionListener(new ActionListener() {
+           
+            public void actionPerformed(ActionEvent e) {
+                
+                ventanaCompra(nombreProduto3);
+                
+            }
+        });        
         this.jPanel1.add(producto1);
         this.jPanel1.add(producto2);
         this.jPanel1.add(producto3);
@@ -107,8 +136,8 @@ public class Categoria extends javax.swing.JFrame {
                 String productoUrl = rs.getString("url");
                 
                 String texto = "<html>" +
-                               "Producto: " + productoNombre + "<br><br>" +  // Producto
-                               "Precio: " + productosPrecio + "<br><br>" +  // Precio
+                               "Producto: " + productoNombre + "<br><br>" + 
+                               "Precio: " + productosPrecio + "<br><br>" +  
                                "</html>";   
                 
                 ImageIcon imagen = new ImageIcon(productoUrl);
@@ -121,18 +150,21 @@ public class Categoria extends javax.swing.JFrame {
                 
                 switch (c) {
                     case 1:
+                        nombreProduto1 = productoNombre;
                         textoProducto1.setText(texto);
                         producto1.add(imagenProducto, BorderLayout.NORTH);
                         producto1.revalidate();
                         producto1.repaint();
                         break;
                     case 2:
+                        nombreProduto2 = productoNombre;
                         textoProducto2.setText(texto);
                         producto2.add(imagenProducto, BorderLayout.NORTH);
                         producto2.revalidate();
                         producto2.repaint();
                         break;
                     case 3:
+                        nombreProduto3 = productoNombre;
                         textoProducto3.setText(texto);
                         imagenProducto.setHorizontalAlignment(SwingConstants.CENTER);
                         producto3.add(imagenProducto, BorderLayout.NORTH);
@@ -203,7 +235,33 @@ public class Categoria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void ventanaCompra(String producto){
+        
+        CompraProducto ventanaCompra = null;
+        ventanaCompra = new CompraProducto(producto);
+        
+        ventanaCompra.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                
+                // Hago visible la ventana principal de nuevo cuando la ventana de usuarios se cierra
+                
+                setVisible(true);
+            }
+        });
 
+        // Muestro la ventana de usuarios
+        
+        ventanaCompra.setVisible(true); 
+
+        // Oculto la ventana principal
+        
+        setVisible(false);
+        
+        
+    }
+    
     public static void main(String args[]) {
        
  
@@ -233,7 +291,9 @@ public class Categoria extends javax.swing.JFrame {
     }
     
     String cate;
-        
+
+    String nombreProduto1, nombreProduto2, nombreProduto3;
+    
     RoundedPanel producto1 = new RoundedPanel(15);
     JButton verMas1 = new JButton("VER MÁS");
     JLabel textoProducto1 = new JLabel();
