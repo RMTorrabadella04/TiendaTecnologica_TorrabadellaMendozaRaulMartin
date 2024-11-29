@@ -116,7 +116,6 @@ public class HistorialCompra extends javax.swing.JFrame {
             Image image = imagen.getImage();
             imagen = new ImageIcon(image); 
 
-            
             JLabel imagenProducto = new JLabel(imagen);
             
             imagenProducto.setHorizontalAlignment(SwingConstants.CENTER);
