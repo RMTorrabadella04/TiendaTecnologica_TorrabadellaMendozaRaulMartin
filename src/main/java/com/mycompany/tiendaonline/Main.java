@@ -101,7 +101,7 @@ public class Main extends javax.swing.JFrame {
 
         BotonUsuario.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         BotonUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        BotonUsuario.setIcon(new javax.swing.ImageIcon("C:\\Users\\alumno\\Desktop\\TiendaOnline\\src\\main\\Resources\\iconouser.png")); // NOI18N
+        BotonUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconouser.png"))); // NOI18N
         BotonUsuario.setToolTipText("");
         BotonUsuario.setBorder(null);
         BotonUsuario.setBorderPainted(false);

@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,8 +21,6 @@ import javax.swing.SwingConstants;
  */
 public class CompraProducto extends javax.swing.JFrame {
 
-    // Resta quitar los comprados y que no se puedan comprar mas de los que hay en el inventario.
-    
     public CompraProducto() {
         
     }
@@ -256,19 +256,22 @@ public class CompraProducto extends javax.swing.JFrame {
     private void BotonCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCompraActionPerformed
         
         int usuarioId = obtenerUsuarioId();
-        int productoId = obtenerProductoId(produ);
-        
-        String cantidadStr = JOptionPane.showInputDialog("Dime la cantidad de productos que vas a comprar:");
+        int productoId = obtenerProductoIdeInventario(produ);
         int cantidad = 0;
-
-        try {
-            // Convierte la cadena a un entero
-            cantidad = Integer.parseInt(cantidadStr);
-        } catch (NumberFormatException e) {
-            // Si ocurre una excepción, significa que no se ingresó un número válido
-            JOptionPane.showMessageDialog(null, "Por favor, ingresa un número válido.");
-        }        
         
+        do{
+            String cantidadStr = JOptionPane.showInputDialog("Dime la cantidad de productos que vas a comprar:");
+         
+            try {
+                // Convierte la cadena a un entero
+                cantidad = Integer.parseInt(cantidadStr);
+            } catch (NumberFormatException e) {
+                // Si ocurre una excepción, significa que no se ingresó un número válido
+                JOptionPane.showMessageDialog(null, "Por favor, ingresa un número válido.");
+            }        
+        }while(cantidad < 0 || cantidad>inventario);
+        
+        int inventarioRestante = inventario - cantidad;
         
         if (usuarioId != -1 && productoId != -1) {
             // Obtenemos la fecha actual
@@ -297,6 +300,18 @@ public class CompraProducto extends javax.swing.JFrame {
             System.out.println("No se pudo encontrar el usuario o el producto.");
         }
         
+        String sql = "UPDATE producto SET inventario = ? WHERE id = ?";
+        
+         try (PreparedStatement pst = conexion.prepareStatement(sql)) {
+             
+             pst.setInt(1, inventarioRestante);
+             pst.setInt(2, productoId); 
+             pst.executeUpdate();
+             
+         } catch (SQLException ex) {
+            Logger.getLogger(CompraProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         traerProducto();
     }//GEN-LAST:event_BotonCompraActionPerformed
     
         private int obtenerUsuarioId() {
@@ -318,9 +333,9 @@ public class CompraProducto extends javax.swing.JFrame {
         return -1; // Retorna -1 si no se encuentra el usuario
     }
 
-    private int obtenerProductoId(String nombreProducto) {
+    private int obtenerProductoIdeInventario(String nombreProducto) {
         
-        String query = "SELECT id FROM Producto WHERE nombre = ?";
+        String query = "SELECT id, inventario FROM Producto WHERE nombre = ?";
         
         try (PreparedStatement pst = conexion.prepareStatement(query)) {
             
@@ -328,7 +343,9 @@ public class CompraProducto extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
             
             if (rs.next()) {
-                return rs.getInt("id");
+                int id = rs.getInt("id");
+                inventario = rs.getInt("inventario");
+                return id;
             }
             
         } catch (SQLException e) {
@@ -366,6 +383,7 @@ public class CompraProducto extends javax.swing.JFrame {
         });
     }
     
+    int inventario;
     String produ;
     RoundedPanel productoFondo = new RoundedPanel(15);
     // Variables declaration - do not modify//GEN-BEGIN:variables
