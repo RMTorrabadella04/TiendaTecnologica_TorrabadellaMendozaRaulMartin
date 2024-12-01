@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -57,7 +58,6 @@ public class HistorialCompra extends javax.swing.JFrame {
         String query = "SELECT u.id AS usuario_id, "+
                        "p.id AS producto_id, " +
                        "p.nombre AS producto_nombre, " +
-                       "p.url AS producto_url, " +
                        "hc.cantidad, " +
                        "hc.fecha " +
                        "FROM Usuario u " +
@@ -77,9 +77,33 @@ public class HistorialCompra extends javax.swing.JFrame {
                 int usuarioId = rs.getInt("usuario_id");
                 int productoId = rs.getInt("producto_id");
                 String productoNombre = rs.getString("producto_nombre");
-                String productoUrl = rs.getString("producto_url");
                 int cantidad = rs.getInt("cantidad");
                 Date fecha = rs.getDate("fecha");
+                
+                imgUrlArray.clear();
+
+                // Para obtener las imágenes relacionadas con el producto
+
+                String sql = "SELECT url " +
+                             "FROM Imagenes " +
+                             "WHERE producto_id = ?;";
+
+                try (PreparedStatement pst2 = conexion.prepareStatement(sql)) {
+                    pst2.setInt(1, productoId);
+                    ResultSet rs2 = pst2.executeQuery();
+
+                    // Añade todas las URLs de imágenes al ArrayList
+
+                    while (rs2.next()) {
+                        String url = rs2.getString("url");
+                        imgUrlArray.add(url);
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                
+                String productoUrl = imgUrlArray.get(random.nextInt(imgUrlArray.size()));
                 
                 compras.add(new Compra(usuarioId, productoId, productoNombre, productoUrl, cantidad, fecha));
                 
@@ -257,6 +281,8 @@ public class HistorialCompra extends javax.swing.JFrame {
     int indiceActual = 0;
     ArrayList<Compra> compras = new ArrayList<>();
     JLabel infoCompras;
+    Random random = new Random();
+    ArrayList<String> imgUrlArray = new ArrayList();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonAnterior;
     private javax.swing.JButton BotonSiguiente;

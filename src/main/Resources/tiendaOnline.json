@@ -34,7 +34,7 @@
  
                         },
  
-                        "imagenes": "src/main/Resources/smartphone.jpeg",
+                        "imagenes": ["src/main/Resources/smartphone.jpeg", "src/main/Resources/smartphone2.png"],
  
                         "inventario": 10
  
@@ -59,7 +59,7 @@
  
                         },
  
-                        "imagenes": "src/main/Resources/tv.jpg",
+                        "imagenes": ["src/main/Resources/tv.jpg", "src/main/Resources/tv2.png"],
  
                         "inventario": 20
                         
@@ -84,7 +84,7 @@
  
                         },
  
-                        "imagenes": "src/main/Resources/portatil.jpg",
+                        "imagenes": ["src/main/Resources/portatil.jpg", "src/main/Resources/portatil2.png"],
  
                         "inventario": 15
                         
@@ -123,7 +123,7 @@
  
                         },
  
-                        "imagenes": "src/main/Resources/balon.jpg",
+                        "imagenes": ["src/main/Resources/balon.jpg", "src/main/Resources/balon2.png"],
  
                         "inventario": 25
  
@@ -148,7 +148,7 @@
  
                         },
  
-                        "imagenes": "src/main/Resources/bate.jpg",
+                        "imagenes": ["src/main/Resources/bate.jpg", "src/main/Resources/bate2.png"],
  
                         "inventario": 25
                         
@@ -173,7 +173,7 @@
  
                         },
  
-                        "imagenes": "src/main/Resources/paloHockey.jpg",
+                        "imagenes": ["src/main/Resources/paloHockey.jpg", "src/main/Resources/paloHockey2.png"],
  
                         "inventario": 5
                         
@@ -212,7 +212,7 @@
  
                         },
  
-                        "imagenes": "src/main/Resources/chaqueta.jpg",
+                        "imagenes": ["src/main/Resources/chaqueta.jpg", "src/main/Resources/chaqueta2.png"],
  
                         "inventario": 7
  
@@ -237,7 +237,7 @@
  
                         },
  
-                        "imagenes": "src/main/Resources/termica.jpg",
+                        "imagenes": ["src/main/Resources/termica.jpg", "src/main/Resources/termica2.png"],
  
                         "inventario": 25
                         
@@ -262,7 +262,7 @@
  
                         },
  
-                        "imagenes": "src/main/Resources/camisetaunisex.jpeg",
+                        "imagenes": ["src/main/Resources/camisetaunisex.jpeg", "src/main/Resources/camisetaunisex2.png"],
  
                         "inventario": 50
                         

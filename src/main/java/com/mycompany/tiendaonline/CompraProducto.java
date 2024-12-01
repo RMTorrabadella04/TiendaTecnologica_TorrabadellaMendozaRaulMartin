@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -171,7 +172,7 @@ public class CompraProducto extends javax.swing.JFrame {
 
     private void traerProducto(){
         
-         String query = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.inventario, p.categoria_nombre, p.url, " +
+         String query = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.inventario, p.categoria_nombre, " +
                        "c.nombre AS caracteristica_nombre, c.valor AS caracteristica_valor " +
                        "FROM producto p " +
                        "LEFT JOIN caracteristicas c ON p.id = c.producto_id " +
@@ -188,7 +189,6 @@ public class CompraProducto extends javax.swing.JFrame {
             double precio = 0.0;
             int inventario = 0;
             String categoriaNombre = null;
-            String url = null;
             
             ArrayList<String> caracteristicas = new ArrayList<>();
             
@@ -200,7 +200,6 @@ public class CompraProducto extends javax.swing.JFrame {
                     precio = rs.getDouble("precio");
                     inventario = rs.getInt("inventario");
                     categoriaNombre = rs.getString("categoria_nombre");
-                    url = rs.getString("url");
                     
                     TextoTitulo.setText("<html>" +
                                     categoriaNombre + "<br><br>" + 
@@ -210,6 +209,32 @@ public class CompraProducto extends javax.swing.JFrame {
                     TextoPrecio.setText("Precio: "+precio);
 
                     TextoInventario.setText("Inventario: "+ inventario);
+                    
+                    // Para obtener las imágenes relacionadas con el producto
+                    
+                    imgUrlArray.clear();
+
+                    
+                    String sql = "SELECT url " +
+                                 "FROM Imagenes " +
+                                 "WHERE producto_id = ?;";
+
+                    try (PreparedStatement pst2 = conexion.prepareStatement(sql)) {
+                        pst2.setInt(1, id);
+                        ResultSet rs2 = pst2.executeQuery();
+
+                        // Añadir todas las URLs de imágenes al ArrayList
+                        while (rs2.next()) {
+                            String url = rs2.getString("url");
+                            imgUrlArray.add(url);
+                        }
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    String url = imgUrlArray.get(random.nextInt(imgUrlArray.size()));
+                    
                     ImageIcon imagen = new ImageIcon(url);
                     Image image = imagen.getImage();
                     imagen = new ImageIcon(image); 
@@ -383,6 +408,9 @@ public class CompraProducto extends javax.swing.JFrame {
         });
     }
     
+        
+    Random random = new Random();
+    ArrayList<String> imgUrlArray = new ArrayList();
     int inventario;
     String produ;
     RoundedPanel productoFondo = new RoundedPanel(15);

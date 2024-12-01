@@ -10,10 +10,8 @@ CREATE TABLE Producto (
     descripcion VARCHAR(100) NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
     inventario INT NOT NULL,
-    categoria_nombre VARCHAR(255) NOT NULL, 
-    url VARCHAR(255)
+    categoria_nombre VARCHAR(255) NOT NULL
 );
-
 
 CREATE TABLE Caracteristicas (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -23,6 +21,12 @@ CREATE TABLE Caracteristicas (
     FOREIGN KEY (producto_id) REFERENCES Producto(id)
 );
 
+CREATE TABLE Imagenes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    producto_id INT NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    FOREIGN KEY (producto_id) REFERENCES Producto(id)
+);
 
 -- Tablas de los Usuarios y su Historial de Compra
 

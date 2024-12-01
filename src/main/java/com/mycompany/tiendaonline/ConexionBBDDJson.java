@@ -120,6 +120,8 @@ public class ConexionBBDDJson {
                 
                 JSONObject caracteristicas = (JSONObject) productos.get("caracteristicas");
                 
+                JSONArray imagenesArray = (JSONArray) productos.get("imagenes");
+                
                 // Hacemos el insert de los datos productos del JSON a la tabla correspondiente de MySQL
                 
                 int idProducto = ((Long) productos.get("id")).intValue();
@@ -132,11 +134,10 @@ public class ConexionBBDDJson {
                 
                 int inventario = ((Long) productos.get("inventario")).intValue();
                 
-                String url = (String) productos.get("imagenes");
 
                 // Para hacer el insert en la BBDD
                 
-                String sql = "INSERT INTO Producto (id, nombre, descripcion, precio, inventario, categoria_nombre, url) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO Producto (id, nombre, descripcion, precio, inventario, categoria_nombre) VALUES (?, ?, ?, ?, ?, ?)";
                
                 try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
                     
@@ -151,8 +152,6 @@ public class ConexionBBDDJson {
                     stmt.setInt(5, inventario);
                     
                     stmt.setString(6, nombre);
-                    
-                    stmt.setString(7, url);
 
                     stmt.executeUpdate();
                     
@@ -161,6 +160,34 @@ public class ConexionBBDDJson {
                 } catch (SQLException e) {
                     
                     System.err.println("Error al insertar el producto: " + e.getMessage());
+                    
+                }
+                
+                // Recorre las imagenes
+                
+                for (Object img : imagenesArray){
+                    
+                    String imagenUrl = (String) img;
+
+                    // Insertamos la imagen en la tabla Imagenes
+                    
+                    String sqlImagen = "INSERT INTO Imagenes (producto_id, url) VALUES (?, ?)";
+                    
+                    try (PreparedStatement stmt = conexion.prepareStatement(sqlImagen)) {
+                        
+                        stmt.setInt(1, idProducto);
+                        
+                        stmt.setString(2, imagenUrl);
+
+                        stmt.executeUpdate();
+                        
+                        System.out.println("Imagen insertada correctamente: " + imagenUrl);
+                        
+                    } catch (SQLException e) {
+                        
+                        System.err.println("Error al insertar la imagen: " + e.getMessage());
+                        
+                    }
                     
                 }
                 

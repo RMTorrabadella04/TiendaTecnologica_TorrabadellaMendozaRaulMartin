@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -114,72 +116,95 @@ public class Categoria extends javax.swing.JFrame {
         
     }
     
-    private void datosProductos(){
-        
-         String query = "SELECT nombre, " +
-                        "precio, " +
-                        "url " +
-                        "FROM producto " +
-                        "WHERE categoria_nombre = ?;";
-         
-         try (PreparedStatement pst = conexion.prepareStatement(query)){
+    private void datosProductos(){ 
+    String query = "SELECT p.id, " +
+                   "p.nombre, " +
+                   "p.precio " +
+                   "FROM producto p " +
+                   "WHERE p.categoria_nombre = ?;";
 
-            pst.setString(1, cate);
-            ResultSet rs = pst.executeQuery();
+    try (PreparedStatement pst = conexion.prepareStatement(query)){
+        pst.setString(1, cate);
+        ResultSet rs = pst.executeQuery();
+
+        int c = 1;
+
+        while (rs.next()) {
+            int productoId = rs.getInt("id");
+            String productoNombre = rs.getString("nombre");
+            double productosPrecio = rs.getDouble("precio");
+
+            String texto = "<html>" +
+                           "Producto: " + productoNombre + "<br><br>" + 
+                           "Precio: " + productosPrecio + "<br><br>" +  
+                           "</html>"; 
+
+            // Limpia imgUrlArray
             
-            int c=1;
+            imgUrlArray.clear();
 
-            while (rs.next()) {
-                
-                String productoNombre = rs.getString("nombre");
-                double productosPrecio = rs.getDouble("precio");
-                String productoUrl = rs.getString("url");
-                
-                String texto = "<html>" +
-                               "Producto: " + productoNombre + "<br><br>" + 
-                               "Precio: " + productosPrecio + "<br><br>" +  
-                               "</html>";   
-                
-                ImageIcon imagen = new ImageIcon(productoUrl);
-                Image image = imagen.getImage();
-                imagen = new ImageIcon(image); 
+            // Para obtener las imágenes relacionadas con el producto
+            
+            String sql = "SELECT url " +
+                         "FROM Imagenes " +
+                         "WHERE producto_id = ?;";
 
-                JLabel imagenProducto = new JLabel(imagen);
+            try (PreparedStatement pst2 = conexion.prepareStatement(sql)) {
+                pst2.setInt(1, productoId);
+                ResultSet rs2 = pst2.executeQuery();
 
-                imagenProducto.setHorizontalAlignment(SwingConstants.CENTER);
+                // Añade todas las URLs de imágenes al ArrayList
                 
-                switch (c) {
-                    case 1:
-                        nombreProduto1 = productoNombre;
-                        textoProducto1.setText(texto);
-                        producto1.add(imagenProducto, BorderLayout.NORTH);
-                        producto1.revalidate();
-                        producto1.repaint();
-                        break;
-                    case 2:
-                        nombreProduto2 = productoNombre;
-                        textoProducto2.setText(texto);
-                        producto2.add(imagenProducto, BorderLayout.NORTH);
-                        producto2.revalidate();
-                        producto2.repaint();
-                        break;
-                    case 3:
-                        nombreProduto3 = productoNombre;
-                        textoProducto3.setText(texto);
-                        imagenProducto.setHorizontalAlignment(SwingConstants.CENTER);
-                        producto3.add(imagenProducto, BorderLayout.NORTH);
-                        producto3.revalidate();
-                        producto3.repaint();
-                        break;
-                        
+                while (rs2.next()) {
+                    String url = rs2.getString("url");
+                    imgUrlArray.add(url);
                 }
-                c++;
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+
+            String productoUrl = imgUrlArray.get(random.nextInt(imgUrlArray.size()));
+
+            ImageIcon imagen = new ImageIcon(productoUrl);
+            Image image = imagen.getImage();
+            imagen = new ImageIcon(image); 
+
+            JLabel imagenProducto = new JLabel(imagen);
+            imagenProducto.setHorizontalAlignment(SwingConstants.CENTER);
+
+            // Agregar el producto y la imagen a la interfaz
+            switch (c) {
+                case 1:
+                    nombreProduto1 = productoNombre;
+                    textoProducto1.setText(texto);
+                    producto1.add(imagenProducto, BorderLayout.NORTH);
+                    producto1.revalidate();
+                    producto1.repaint();
+                    break;
+                case 2:
+                    nombreProduto2 = productoNombre;
+                    textoProducto2.setText(texto);
+                    producto2.add(imagenProducto, BorderLayout.NORTH);
+                    producto2.revalidate();
+                    producto2.repaint();
+                    break;
+                case 3:
+                    nombreProduto3 = productoNombre;
+                    textoProducto3.setText(texto);
+                    producto3.add(imagenProducto, BorderLayout.NORTH);
+                    producto3.revalidate();
+                    producto3.repaint();
+                    break;
+            }
+            c++;
         }
-        
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
+
     
     private void estiloBoton(JButton botoncito) {
         
@@ -306,6 +331,8 @@ public class Categoria extends javax.swing.JFrame {
     JButton verMas3 = new JButton("VER MÁS");
     JLabel textoProducto3 = new JLabel();
     
+    Random random = new Random();
+    ArrayList<String> imgUrlArray = new ArrayList();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
